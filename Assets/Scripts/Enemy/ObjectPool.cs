@@ -34,10 +34,9 @@ public class ObjectPool : MonoBehaviour
             }
         }
 
-        // If all objects are in use, instantiate a new one, add it to the pool, and return it
-        GameObject newObj = Instantiate(objectPrefab);
-        pool.Add(newObj);
-        return newObj;
+        // If no inactive objects are found, return null or handle waiting logic
+        Debug.LogWarning("No available objects in the pool!");
+        return null; // Or handle accordingly (e.g., wait or notify)
     }
 
     // Optional: Return an object to the pool (deactivate and reuse later)

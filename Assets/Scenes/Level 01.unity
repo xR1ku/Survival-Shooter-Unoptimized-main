@@ -1349,6 +1349,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 24300000, guid: 8434b04884c414ac6b468e10945685e6,
         type: 2}
+    - target: {fileID: 114291914702536300, guid: 9e3e72cd89ef44f97afe08f9baaabc18,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114762724205432510, guid: 9e3e72cd89ef44f97afe08f9baaabc18,
         type: 3}
       propertyPath: damageImage

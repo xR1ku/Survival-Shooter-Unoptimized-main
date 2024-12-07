@@ -1,20 +1,47 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    void Update ()
-    {
-        Transform player = FindObjectOfType<PlayerMovement>().transform;
+    private NavMeshAgent navMeshAgent;
+    private EnemyHealth enemyHealth;
+    private PlayerHealth playerHealth;
+    private Transform playerTransform;
 
-        if (GetComponent<EnemyHealth>().currentHealth > 0 && player.GetComponent<PlayerHealth>().currentHealth > 0)
+    void Awake()
+    {
+        // Cache components for better performance
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        enemyHealth = GetComponent<EnemyHealth>();
+
+        // Find player once and cache the reference
+        PlayerMovement player = FindObjectOfType<PlayerMovement>();
+        if (player != null)
         {
-            GetComponent<NavMeshAgent>().SetDestination (player.position);
+            playerTransform = player.transform;
+            playerHealth = player.GetComponent<PlayerHealth>();
         }
         else
         {
-            GetComponent<NavMeshAgent>().enabled = false;
+            Debug.LogWarning("PlayerMovement script not found in the scene.");
+        }
+    }
+
+    void Update()
+    {
+        // Ensure all references are valid
+        if (playerTransform == null || playerHealth == null || enemyHealth == null || navMeshAgent == null)
+            return;
+
+        // Check health conditions before setting the destination
+        if (enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
+        {
+            navMeshAgent.enabled = true;
+            navMeshAgent.SetDestination(playerTransform.position);
+        }
+        else
+        {
+            navMeshAgent.enabled = false;
         }
     }
 }
